@@ -56,6 +56,18 @@ class Article
     private $section;
 
     /**
+     * @ORM\Column(name="NrSection", nullable=True)
+     * @var int
+     */
+    private $sectionId;
+
+    /**
+     * @ORM\Column(name="NrIssue", nullable=True)
+     * @var int
+     */
+    private $issueId;
+
+    /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
@@ -290,6 +302,20 @@ class Article
     private $authors;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\JoinTable(name="ArticleSnippets",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="ArticleId", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Snippet
+     */
+    private $snippets;
+
+    /**
      * @var ArticleData
      */
     private $data;
@@ -404,7 +430,7 @@ class Article
      */
     public function getIssueId()
     {
-        return $this->issue->getId();
+        return $this->issueId;
     }
 
     /**
@@ -438,7 +464,7 @@ class Article
      */
     public function getSectionId()
     {
-        return $this->section->getId();
+        return $this->sectionId;
     }
 
     /**
